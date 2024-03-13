@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="" method=" post" id="expence-form">
+      <label for="amount">choose expence amount</label>
+      <input type="number" name="amount" id="amount" />
+      <br />
+      <br />
+      <label for="description">choose description:</label>
+      <input type="text" name="description" id="description" />
+      <br />
+      <br />
+      <label for="category">choose a category</label>
+      <select name="category" id="category">
+        <option value="fluel">fluel</option>
+        <option value="movie">movie</option>
+        <option value="electricity">electricity</option>
+        <option value="food">food</option>
+      </select>
+      <br /><br />
+      <button type=" submit">add expence</button>
+    </form>
+
+    <ul id="expences"></ul>
+    <!-- js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
