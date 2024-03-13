@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body style="margin: 0">
+    <form onsubmit="handleFormSubmit(event)">
+      <label for="itemName">itemName:</label>
+      <input type="text" name="itemName" id="itemName" />
+      <br /><br />
+      <label for="description">Description:</label>
+      <input type="description" name="description" id="description" />
+      <br /><br />
+      <label for="price">Price: </label>
+      <input type="number" name="price" id="price" />
+      <br /><br />
+      <label for="quantity">Quantity:</label>
+      <input type="number" name="quantity" id="quantity" />
+      <button type="submit">Submit</button>
+    </form>
+    <ul></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
