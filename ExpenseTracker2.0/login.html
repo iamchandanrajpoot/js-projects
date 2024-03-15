@@ -6,12 +6,15 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/user/login" method="post">
+    <p style="color: red;" id="message"></p>
+
+    <form onsubmit="handleLogin(event)">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" required><br/><br/>
         <label for="password">Password</label>
         <input type="password" name="password" id="password" required><br/><br/>
         <button type="submit">Login</button>
     </form>
+    <script src="user.js"></script>
 </body>
 </html>
