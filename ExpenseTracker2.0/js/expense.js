@@ -1,8 +1,11 @@
 const expenseList = document.getElementById("expense-list");
 async function displayExpenses() {
   try {
-    const response = await fetch("http://localhost:4000/add-expense", {
+    const response = await fetch("http://localhost:4000/api/expenses", {
       method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("authToken"),
+      }
     });
     const expenses = await response.json();
     console.log(expenses);
@@ -32,9 +35,12 @@ function handlePostExpense(e) {
     description: e.target.description.value,
     category: e.target.category.value,
   };
-  fetch("http://localhost:4000/add-expense", {
+  fetch("http://localhost:4000/api/add-expense", {
     method: "post",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("authToken"),
+    },
     body: JSON.stringify(expenseData),
   })
     .then((response) => {
@@ -54,12 +60,17 @@ expenseList.addEventListener("click", async (e) => {
     if ((e.target.className = "delete")) {
       // console.log("button is clicked");
       const response = await fetch(
-        `http://localhost:4000/add-expense/${e.target.parentElement.getAttribute("key")}`,
+        `http://localhost:4000/api/expenses/${e.target.parentElement.getAttribute(
+          "key"
+        )}`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: localStorage.getItem("authToken"),
+          }
         }
       );
-      if(response.status === 200){
+      if (response.status === 200) {
         e.target.parentElement.remove();
       }
     }

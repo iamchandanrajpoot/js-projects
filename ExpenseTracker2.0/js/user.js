@@ -23,28 +23,32 @@ function handleRegister(e) {
     })
     .catch((err) => console.log(err));
 }
-function handleLogin(e) {
-  e.preventDefault();
-  const userData = {
-    email: e.target.email.value,
-    password: e.target.password.value,
-  };
-  fetch("http://localhost:4000/user/login", {
-    method: "post",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userData),
-  })
-    .then((response) => {
-      console.log(response);
-      if (response.status === 200) {
-        window.location.href = "expense.html";
-      } else {
-        return response.json();
-      }
-    })
-    .then((data) => {
-      console.log(data);
-      document.getElementById("message").innerHTML = data.message;
-    })
-    .catch((err) => console.log(err));
+
+async function handleLogin(e) {
+  try {
+    e.preventDefault();
+    const userData = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+    const response = await fetch("http://localhost:4000/user/login", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+    console.log(response);
+    if (response.status === 200) {
+      const result = await response.json();
+      console.log(result);
+      localStorage.setItem("authToken", result.token);
+      window.location.href = "expense.html";
+    } else {
+      const result = await response.json();
+      // console.log(result);
+      document.getElementById("message").innerHTML = result.message;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
 }
