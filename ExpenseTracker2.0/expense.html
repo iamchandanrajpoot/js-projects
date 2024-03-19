@@ -6,6 +6,11 @@
     <title>expense</title>
 </head>
 <body>
+    <nav>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="expense.html">Expense</a>
+    </nav>
     <p id="premium-p"></p>
     <form onsubmit="handlePostExpense(event)">
         <label for="expendicture">Expendicture</label>
@@ -21,7 +26,11 @@
         </select><br><br>
         <button type="submit">Add Expense</button>
     </form>
+    <h1>Expenses</h1>
     <ul id="expense-list"></ul>
+    <div id="leader-board" style="display: none;"></div>
+    
+
 
     <!-- script -->
  
