@@ -6,6 +6,7 @@
     <title>expense</title>
 </head>
 <body>
+    <button id="rozorpay-btn">createOder</button>
     <form onsubmit="handlePostExpense(event)">
         <label for="expendicture">Expendicture</label>
         <input type="number" name="expendicture" id="expendicture" required/><br><br>
@@ -18,9 +19,13 @@
             <option value="movie">Movie</option>
             <option value="shoppin">Shopping</option>
         </select><br><br>
-        <button type="submit">SinUp</button>
+        <button type="submit">Add Expense</button>
     </form>
     <ul id="expense-list"></ul>
+
+    <!-- script -->
+    <script src="js/index.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="js/expense.js"></script>
 </body>
 </html>
