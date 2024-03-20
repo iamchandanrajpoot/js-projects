@@ -55,9 +55,10 @@ async function displayUserUi() {
                 const responseData = await updateTransactionResponse.json();
                 console.log(responseData);
                 p.innerHTML =
-                "Your premium user now <button id='leader-board-btn'>Leader Board </button>";
-              const leaderBoardBtn = document.getElementById("leader-board-btn");
-              leaderBoardBtn.addEventListener("click", displayLeaderBoadrd);
+                  "Your premium user now <button id='leader-board-btn'>Leader Board </button>";
+                const leaderBoardBtn =
+                  document.getElementById("leader-board-btn");
+                leaderBoardBtn.addEventListener("click", displayLeaderBoadrd);
                 alert("You are now a premium user");
               } catch (error) {
                 console.error("Error updating transaction status:", error);
@@ -157,8 +158,10 @@ function handlePostExpense(e) {
     })
     .then((result) => {
       console.log(result);
-      //   document.getElementById("message").innerHTML = data.message;
-      displayExpense(result);
+      if (result.successful) {
+        displayExpense(result.expense);
+        //   document.getElementById("message").innerHTML = data.message;
+      }
     })
     .catch((err) => console.log(err));
 }
@@ -207,13 +210,11 @@ async function displayLeaderBoadrd() {
     h1.innerHTML = "Leader Board";
     leaderboard.appendChild(h1);
     const ul = document.createElement("ul");
-    premiumUsers
-      .sort((a, b) => b.totalExpense - a.totalExpense)
-      .forEach((premiumUser) => {
-        const li = document.createElement("li");
-        li.innerHTML = `Name: ${premiumUser.name}, Total Expense : ${premiumUser.totalExpense}`;
-        ul.appendChild(li);
-      });
+    premiumUsers.forEach((premiumUser) => {
+      const li = document.createElement("li");
+      li.innerHTML = `Name: ${premiumUser.name}, Total Expense : ${premiumUser.totalExpense}`;
+      ul.appendChild(li);
+    });
     leaderboard.appendChild(ul);
   } catch (error) {
     console.log(error);

@@ -24,6 +24,7 @@ function handleRegister(e) {
       .catch((err) => console.log(err));
   }
   
+  // login----------------------------------
   async function handleLogin(e) {
     try {
       e.preventDefault();
@@ -52,3 +53,11 @@ function handleRegister(e) {
     }
   
   }
+
+  // forget password
+
+  const forgetBtn = document.getElementById("forget-btn");
+
+  forgetBtn.addEventListener("click", ()=>{
+    window.location.href = "forgetPsw.html"
+  })
