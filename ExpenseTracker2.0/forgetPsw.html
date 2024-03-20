@@ -11,10 +11,12 @@
         <a href="register.html">Register</a>
         <a href="expense.html">Expense</a>
     </nav>
-    <form action="/password/forgotpassword" method="post">
+    <form onsubmit="handleForgotPsw(event)">
         <label for="email"></label>
         <input type="email" name="email" id="email">
         <button type="submit">Submit</button>
     </form>
+
+    <script src="js//forgotPsw.js"></script>
 </body>
 </html>
