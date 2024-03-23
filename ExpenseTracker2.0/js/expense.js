@@ -220,3 +220,26 @@ async function displayLeaderBoadrd() {
     console.log(error);
   }
 }
+
+async function download() {
+  try {
+    const response = await fetch(
+      "http://localhost:4000/user/download",
+      {
+        method: "GET",
+        headers: { Authorization: localStorage.getItem("authToken") },
+      }
+    );
+
+    if (response.status === 201) {
+      const data = await response.json();
+      var a = document.createElement("a");
+      console.log(data.fileUrl)
+      a.href = data.fileUrl;
+      a.download = "myexpense.csv";
+      a.click();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
