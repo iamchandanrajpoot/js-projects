@@ -223,18 +223,15 @@ async function displayLeaderBoadrd() {
 
 async function download() {
   try {
-    const response = await fetch(
-      "http://localhost:4000/user/download",
-      {
-        method: "GET",
-        headers: { Authorization: localStorage.getItem("authToken") },
-      }
-    );
+    const response = await fetch("http://localhost:4000/user/download", {
+      method: "GET",
+      headers: { Authorization: localStorage.getItem("authToken") },
+    });
 
     if (response.status === 201) {
       const data = await response.json();
       var a = document.createElement("a");
-      console.log(data.fileUrl)
+      console.log(data.fileUrl);
       a.href = data.fileUrl;
       a.download = "myexpense.csv";
       a.click();
@@ -243,3 +240,30 @@ async function download() {
     console.log(error);
   }
 }
+
+const downloadedFilesUl = document.getElementById("downloaded-files");
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await fetch(
+      "http://localhost:4000/user/downloaded-files",
+      {
+        method: "GET",
+        headers: { Authorization: localStorage.getItem("authToken") },
+      }
+    );
+
+    if (response.status == 200) {
+      const result = await response.json();
+      result.downloadFiles.forEach((downloadedFile) => {
+        const li = document.createElement("li");
+        li.innerHTML = `${downloadedFile.fileUrl}`;
+        downloadedFilesUl.appendChild(li)
+      });
+    } else {
+      throw error("something went worong");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
