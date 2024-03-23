@@ -13,6 +13,9 @@ async function displayUserUi() {
         "Your premium user now <button id='leader-board-btn'>Leader Board </button>";
       const leaderBoardBtn = document.getElementById("leader-board-btn");
       leaderBoardBtn.addEventListener("click", displayLeaderBoadrd);
+
+      const downloadexpensebtn = document.getElementById("downloadexpense");
+      downloadexpensebtn.style.display = "block";
     } else {
       p.innerHTML = '<button id="rozorpay-btn">Purchase Premium</button>';
       const rozorpayBtn = document.getElementById("rozorpay-btn");
@@ -214,6 +217,9 @@ async function displayLeaderBoadrd() {
       const li = document.createElement("li");
       li.innerHTML = `Name: ${premiumUser.name}, Total Expense : ${premiumUser.totalExpense}`;
       ul.appendChild(li);
+
+      const downloadexpensebtn = document.getElementById("downloadexpense");
+      downloadexpensebtn.style.display = "block";
     });
     leaderboard.appendChild(ul);
   } catch (error) {
@@ -255,14 +261,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (response.status == 200) {
       const h1 = document.createElement("h1");
-      h1.innerHTML = "Downloaded Files"
+      h1.innerHTML = "Downloaded Files";
       downloadedFilesDiv.appendChild(h1);
+
       const ul = document.createElement("ul");
+      downloadedFilesDiv.appendChild(ul);
       const result = await response.json();
       result.downloadFiles.forEach((downloadedFile) => {
+        // console.log(downloadedFile)
         const li = document.createElement("li");
         li.innerHTML = `${downloadedFile.fileUrl}`;
-        ul.appendChild(li)
+        ul.appendChild(li);
       });
     } else {
       throw error("something went worong");
