@@ -241,7 +241,7 @@ async function download() {
   }
 }
 
-const downloadedFilesUl = document.getElementById("downloaded-files");
+const downloadedFilesDiv = document.getElementById("downloaded-files");
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
@@ -254,11 +254,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
     if (response.status == 200) {
+      const h1 = document.createElement("h1");
+      h1.innerHTML = "Downloaded Files"
+      downloadedFilesDiv.appendChild(h1);
+      const ul = document.createElement("ul");
       const result = await response.json();
       result.downloadFiles.forEach((downloadedFile) => {
         const li = document.createElement("li");
         li.innerHTML = `${downloadedFile.fileUrl}`;
-        downloadedFilesUl.appendChild(li)
+        ul.appendChild(li)
       });
     } else {
       throw error("something went worong");
