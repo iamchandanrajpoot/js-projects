@@ -109,27 +109,55 @@ async function displayUserUi() {
 displayUserUi();
 // -----------------------------------------------
 const expenseList = document.getElementById("expense-list");
-async function displayExpenses() {
-  try {
-    const response = await fetch("http://localhost:4000/api/expenses", {
-      method: "GET",
-      headers: {
-        Authorization: localStorage.getItem("authToken"),
-      },
-    });
-    const expenses = await response.json();
-    console.log(expenses);
-    expenses.forEach((expenses) => {
-      const li = document.createElement("li");
-      li.setAttribute("key", expenses.id);
-      li.innerHTML = `${expenses.expendicture} - ${expenses.description} - ${expenses.category} <button class = "delete">Delete Expense</ button>`;
-      expenseList.appendChild(li);
-    });
-  } catch (error) {
-    console.log(error);
-  }
+
+function getExpenses(page) {
+  let currentPage = page; 
+  console.log("currentpage:", page)
+  // let currentPage = page;
+  fetch(`http://localhost:4000/api/expenses?page=${page}`, {
+    method: "GET",
+    headers: { Authorization: localStorage.getItem("authToken") },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      const { expenses, totalPages } = data;
+      expenseList.innerHTML = ""; // Clear previous content
+
+      expenses.forEach((expense) => {
+        const li = document.createElement("li");
+        li.setAttribute("key", expense.id);
+        li.innerHTML = `${expense.expendicture} - ${expense.description} - ${expense.category} <button class = "delete">Delete Expense</ button>`;
+        expenseList.appendChild(li);
+      });
+
+      const pagination = document.getElementById("pagination");
+      pagination.innerHTML = ""; // Clear previous pagination links
+
+      if (currentPage > 1) {
+        pagination.innerHTML += `<button onclick="getExpenses(${
+          currentPage - 1
+        })">Previous</button>`;
+      } else {
+        pagination.innerHTML += `<button disabled>Previous</button>`;
+      }
+
+      pagination.innerHTML += ` Page ${page} of ${totalPages} `;
+
+      if (currentPage < totalPages) {
+        pagination.innerHTML += `<button onclick="getExpenses(${
+          currentPage + 1
+        })">Next</button>`;
+      } else {
+        pagination.innerHTML += `<button disabled>Next</button>`;
+      }
+    })
+    .catch((error) => console.error("Error fetching users:", error));
 }
-displayExpenses();
+
+document.addEventListener("DOMContentLoaded", () => {
+  getExpenses(1); // Fetch users for the initial page
+});
 
 // ----------------------------------
 function displayExpense(expense) {
