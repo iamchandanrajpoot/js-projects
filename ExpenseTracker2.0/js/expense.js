@@ -108,51 +108,60 @@ async function displayUserUi() {
 
 displayUserUi();
 // -----------------------------------------------
+document.getElementById("perpage").value = localStorage.getItem("perpage") || document.getElementById("perpage").value
+function handlePerpageChange(e){
+  const perpageValue = e.target.value;
+  localStorage.setItem("perpage", perpageValue);
+}
 const expenseList = document.getElementById("expense-list");
 
-function getExpenses(page) {
-  let currentPage = page; 
-  console.log("currentpage:", page)
+async function getExpenses(page) {
+  let currentPage = page;
+  console.log("currentpage:", page);
   // let currentPage = page;
-  fetch(`http://localhost:4000/api/expenses?page=${page}`, {
-    method: "GET",
-    headers: { Authorization: localStorage.getItem("authToken") },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
-      const { expenses, totalPages } = data;
-      expenseList.innerHTML = ""; // Clear previous content
-
-      expenses.forEach((expense) => {
-        const li = document.createElement("li");
-        li.setAttribute("key", expense.id);
-        li.innerHTML = `${expense.expendicture} - ${expense.description} - ${expense.category} <button class = "delete">Delete Expense</ button>`;
-        expenseList.appendChild(li);
-      });
-
-      const pagination = document.getElementById("pagination");
-      pagination.innerHTML = ""; // Clear previous pagination links
-
-      if (currentPage > 1) {
-        pagination.innerHTML += `<button onclick="getExpenses(${
-          currentPage - 1
-        })">Previous</button>`;
-      } else {
-        pagination.innerHTML += `<button disabled>Previous</button>`;
+  try {
+    const response = await fetch(
+      `http://localhost:4000/api/expenses?page=${page}&perpage=${localStorage.getItem("perpage")}`,
+      {
+        method: "GET",
+        headers: { Authorization: localStorage.getItem("authToken") },
       }
+    );
+    const data = await response.json();
 
-      pagination.innerHTML += ` Page ${page} of ${totalPages} `;
+    console.log(data);
+    const { expenses, totalPages } = data;
+    expenseList.innerHTML = ""; // Clear previous content
 
-      if (currentPage < totalPages) {
-        pagination.innerHTML += `<button onclick="getExpenses(${
-          currentPage + 1
-        })">Next</button>`;
-      } else {
-        pagination.innerHTML += `<button disabled>Next</button>`;
-      }
-    })
-    .catch((error) => console.error("Error fetching users:", error));
+    expenses.forEach((expense) => {
+      const li = document.createElement("li");
+      li.setAttribute("key", expense.id);
+      li.innerHTML = `${expense.expendicture} - ${expense.description} - ${expense.category} <button class = "delete">Delete Expense</ button>`;
+      expenseList.appendChild(li);
+    });
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = ""; // Clear previous pagination links
+
+    pagination.innerHTML += ` 1-${localStorage.getItem("perpage")} of ${totalPages} `;
+
+    if (currentPage > 1) {
+      pagination.innerHTML += `<button onclick="getExpenses(${
+        currentPage - 1
+      })"> < </button>`;
+    } else {
+      pagination.innerHTML += `<button disabled> < </button>`;
+    }
+    if (currentPage < totalPages) {
+      pagination.innerHTML += `<button onclick="getExpenses(${
+        currentPage + 1
+      })"> > </button>`;
+    } else {
+      pagination.innerHTML += `<button disabled> > </button>`;
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -1,47 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>expense</title>
-</head>
-<body>
+  </head>
+  <body>
     <nav>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
-        <a href="expense.html">Expense</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="expense.html">Expense</a>
     </nav>
     <p id="premium-p"></p>
     <form onsubmit="handlePostExpense(event)">
-        <label for="expendicture">Expendicture</label>
-        <input type="number" name="expendicture" id="expendicture" required/><br><br>
-        <label for="description">Description</label>
-        <input type="text" name="description" id="description" required /><br><br>
-        <label for="category">Category</label>
-        <select name="category" id="category">
-            <option value="food">Food</option>
-            <option value="petrol">Petrol</option>
-            <option value="movie">Movie</option>
-            <option value="shoppin">Shopping</option>
-        </select><br><br>
-        <button type="submit">Add Expense</button>
+      <label for="expendicture">Expendicture</label>
+      <input
+        type="number"
+        name="expendicture"
+        id="expendicture"
+        required
+      /><br /><br />
+      <label for="description">Description</label>
+      <input
+        type="text"
+        name="description"
+        id="description"
+        required
+      /><br /><br />
+      <label for="category">Category</label>
+      <select name="category" id="category">
+        <option value="food">Food</option>
+        <option value="petrol">Petrol</option>
+        <option value="movie">Movie</option>
+        <option value="shoppin">Shopping</option></select
+      ><br /><br />
+      <button type="submit">Add Expense</button>
     </form>
-    <h1>Expenses</h1>
-    <ul id="expense-list"></ul>
 
-    <!-- pagination -->
-    <div id="pagination"></div>
-    <div id="leader-board" style="display: none;"></div>
+    <hr/>
+  
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <label for="perpage">Number of rows per page</label>
+      <select name="perpage" id="perpage" onchange="handlePerpageChange(event)">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <div id="pagination"></div>
+    </div>
 
-    <button onclick="download()" id="downloadexpense" style="display: none;">Download File</button>
+    <div>
+      <h1>Expenses</h1>
+      <ul id="expense-list"></ul>
+    </div>
+
+    
+    <div id="leader-board" style="display: none"></div>
+
+    <button onclick="download()" id="downloadexpense" style="display: none">
+      Download File
+    </button>
 
     <!-- downloaded files -->
-   
+
     <div id="downloaded-files"></div>
 
     <!-- script -->
- 
+
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="js/expense.js"></script>
-</body>
+  </body>
 </html>
