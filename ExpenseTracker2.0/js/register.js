@@ -25,5 +25,5 @@ function handleRegister(e) {
         }
       })
       .catch((err) => console.log(err));
-  }
+}
   
